@@ -2,6 +2,8 @@ FROM alpine:3.9
 
 WORKDIR /ansible
 
+ENV HOME /tmp
+
 RUN apk add --no-cache --upgrade \
         curl \
         openssl \
