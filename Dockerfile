@@ -8,6 +8,7 @@ RUN apk add --no-cache --upgrade \
         ca-certificates \
         python3 \
         git \
+        bash \
     && apk add --no-cache --upgrade --virtual build-dependencies \
         python3-dev \
         libffi-dev \
@@ -32,7 +33,9 @@ RUN apk add --no-cache --upgrade \
     && if [ ! -e /usr/bin/python ]; then ln -s /usr/bin/python3 /usr/bin/python; fi \
     # Get kubectl
     && curl -fSLo /usr/local/bin/kubectl https://storage.googleapis.com/kubernetes-release/release/$(curl -s https://storage.googleapis.com/kubernetes-release/release/stable.txt)/bin/linux/amd64/kubectl \
-    && chmod +x /usr/local/bin/kubectl
+    && chmod +x /usr/local/bin/kubectl \
+    # Set the default shell from ash to bash
+    && sed -i -e "s/bin\/ash/bin\/bash/" /etc/passwd
 
 COPY files /
 
